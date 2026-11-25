@@ -1,6 +1,6 @@
 from typing import Any
 
-from rapidfuzz import fuzz
+from rapidfuzz import fuzz, utils
 
 from db.conexao import conectar
 
@@ -54,7 +54,7 @@ def buscar_por_proximidade(
         for r in res:
             termo_encontrado = r[0].lower()
 
-            score = fuzz.token_set_ratio(busca, termo_encontrado) / 100.0
+            score = fuzz.token_set_ratio(busca, termo_encontrado, processor=utils.default_process) / 100.0
             # Bônus para nomes que começam com o primeiro termo buscado
             score += 0.15 if termo_encontrado.startswith(busca_split[0]) else 0.0
             # Bônus de proximidade de tamanho

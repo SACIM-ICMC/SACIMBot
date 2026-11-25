@@ -1,0 +1,228 @@
+-- TABELA DE CURSO
+
+CREATE TABLE IF NOT EXISTS curso (
+    codigo_curso TEXT NOT NULL,
+    codigo_habilitacao TEXT NOT NULL,
+
+    codigo_unidade TEXT NOT NULL,
+    nome TEXT NOT NULL,
+    unidade TEXT NOT NULL,
+    periodo TEXT NOT NULL,
+    ativado INTEGER NOT NULL,
+    link TEXT NOT NULL,
+
+    dados TEXT NOT NULL,
+
+    PRIMARY KEY (codigo_curso, codigo_habilitacao)
+);
+
+-- TABELA DE DISCIPLINA
+
+CREATE TABLE IF NOT EXISTS disciplina (
+    codigo TEXT PRIMARY KEY,
+    codigo_unidade TEXT,
+    unidade TEXT,
+    departamento TEXT,
+    nome TEXT,
+    nome_ingles TEXT,
+    creditos_aula INTEGER,
+    creditos_trabalho INTEGER,
+    carga_horaria INTEGER,
+    carga_horaria_extensao INTEGER,
+    tipo TEXT,
+    ativacao TEXT,
+    desativacao TEXT,
+    ementa TEXT,
+    objetivos TEXT,
+    conteudo TEXT,
+    aval_metodo TEXT,
+    aval_criterios TEXT,
+    aval_normas_recuperacao TEXT,
+    bibliografia TEXT,
+    ext_grupo_social_alvo TEXT,
+    ext_objetivos TEXT,
+    ext_descricao TEXT,
+    ext_indicadores TEXT,
+
+    dados TEXT
+);
+
+CREATE TABLE IF NOT EXISTS disciplina_docente_responsavel (
+    codigo TEXT,
+    nome TEXT NOT NULL,
+    nusp TEXT NOT NULL,
+
+    PRIMARY KEY (codigo, nusp),
+    FOREIGN KEY (codigo) REFERENCES disciplina(codigo)
+);
+
+-- TABELA DE REQUISITO
+
+CREATE TABLE IF NOT EXISTS disciplina_requisito (
+    codigo_disciplina TEXT NOT NULL,
+    codigo_curso TEXT NOT NULL,
+    nome_curso TEXT NOT NULL,
+    periodo_ideal INTEGER NOT NULL,
+
+    codigo_requisito TEXT NOT NULL,
+    nome_requisito TEXT NOT NULL,
+    tipo TEXT NOT NULL,
+    id_grupo INTEGER NOT NULL,
+
+    dados TEXT NOT NULL,
+
+    UNIQUE (codigo_disciplina, codigo_curso, codigo_requisito),
+    FOREIGN KEY (codigo_requisito, codigo_disciplina) REFERENCES disciplina(codigo, codigo)
+);
+
+-- TABELAS DE OFERECIMENTOS
+
+CREATE TABLE IF NOT EXISTS disc_ofc (
+    codigo_disciplina TEXT NOT NULL,
+    codigo_turma TEXT NOT NULL,
+
+    obs_turma TEXT,
+    inicio TEXT,
+    fim TEXT,
+    tipo TEXT,
+    obs TEXT,
+
+    dados TEXT NOT NULL,
+
+    CONSTRAINT pk_codigo PRIMARY KEY (codigo_disciplina, codigo_turma),
+    FOREIGN KEY (codigo_disciplina) REFERENCES disciplina(codigo)
+);
+
+CREATE TABLE IF NOT EXISTS disc_ofc_horario (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo_disciplina TEXT NOT NULL,
+    codigo_turma TEXT NOT NULL,
+
+    dia TEXT,
+    horario_inicio TEXT,
+    horario_termino TEXT,
+
+    dados TEXT NOT NULL,
+
+    UNIQUE (
+        codigo_disciplina,
+        codigo_turma,
+        dia,
+        horario_inicio,
+        horario_termino
+    ),
+
+    FOREIGN KEY (codigo_disciplina, codigo_turma) REFERENCES disciplina_oferecimento(codigo_disciplina, codigo_turma)
+);
+
+CREATE TABLE IF NOT EXISTS disc_ofc_horario_prof (
+    id_horario INTEGER NOT NULL,
+    codigo_disciplina TEXT NOT NULL,
+    codigo_turma TEXT NOT NULL,
+    nome TEXT,
+    tipo TEXT,
+
+    FOREIGN KEY (id_horario) REFERENCES disc_ofc_horario(id),
+    FOREIGN KEY (codigo_disciplina, codigo_turma) REFERENCES disciplina_oferecimento(codigo_disciplina, codigo_turma)
+);
+
+CREATE TABLE IF NOT EXISTS disc_ofc_ativ (
+    codigo_disciplina TEXT NOT NULL,
+    codigo_turma TEXT NOT NULL,
+
+    nome TEXT,
+    tipo TEXT,
+    tipo_atividade TEXT,
+    carga_horaria INTEGER,
+
+    CONSTRAINT fk_codigo
+    FOREIGN KEY (codigo_disciplina, codigo_turma) REFERENCES disciplina_oferecimento(codigo_disciplina, codigo_turma)
+);
+
+-- TABELAS DE PESQUISA
+
+CREATE TABLE IF NOT EXISTS pesquisa (
+    id TEXT PRIMARY KEY,
+    nome TEXT NOT NULL,
+    area TEXT NOT NULL,
+
+    dados TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS pesquisa_linha (
+    id_pesquisa TEXT NOT NULL,
+    linha TEXT NOT NULL,
+
+    FOREIGN KEY (id_pesquisa) REFERENCES pesquisa(id)
+);
+
+CREATE TABLE IF NOT EXISTS pesquisa_lab (
+    id_pesquisa TEXT NOT NULL,
+    nome TEXT,
+    link TEXT,
+
+    FOREIGN KEY (id_pesquisa) REFERENCES pesquisa(id)
+);
+
+CREATE TABLE IF NOT EXISTS pesquisa_pessoa (
+    id_pesquisa TEXT NOT NULL,
+    id_pessoa TEXT NOT NULL,
+
+    PRIMARY KEY (id_pesquisa, id_pessoa),
+    FOREIGN KEY (id_pesquisa) REFERENCES pesquisa(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_pessoa) REFERENCES pessoa(id) ON DELETE CASCADE
+);
+
+-- TABELA DE PESSOA
+
+CREATE TABLE IF NOT EXISTS pessoa (
+    id TEXT PRIMARY KEY,
+
+    nome TEXT NOT NULL,
+    nusp TEXT NOT NULL,
+    profissao TEXT,
+    titulacao TEXT,
+    departamento TEXT,
+    categorias TEXT,
+    researcher_id TEXT,
+    email TEXT,
+    sala TEXT,
+    pagina TEXT,
+    telefone TEXT,
+    lattes TEXT,
+    grupos_cnpq TEXT,
+
+    dados TEXT NOT NULL
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_nusp ON pessoa (nusp);
+
+-- TABELAS DE COMISSÕES
+
+CREATE TABLE IF NOT EXISTS comissao (
+    codigo TEXT NOT NULL,
+    sigla TEXT NOT NULL,
+
+    nome TEXT NOT NULL,
+    link TEXT NOT NULL,
+
+    dados TEXT NOT NULL,
+
+    PRIMARY KEY (codigo, sigla)
+);
+
+CREATE TABLE IF NOT EXISTS comissao_membro (
+    codigo_comissao TEXT NOT NULL,
+    sigla_comissao TEXT NOT NULL,
+
+    nome TEXT NOT NULL,
+    nusp TEXT NOT NULL,
+    categoria_coleg TEXT NOT NULL,
+    funcao_coleg TEXT,
+    funcao_membro TEXT,
+    inicio_mandato TEXT,
+    fim_mandato TEXT,
+    dados TEXT NOT NULL,
+
+    FOREIGN KEY (codigo_comissao, sigla_comissao) REFERENCES comissao(codigo, sigla)
+);

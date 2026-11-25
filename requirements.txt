@@ -1,0 +1,6 @@
+pyTelegramBotAPI # API do Bot
+python-dotenv # Para o .env
+beautifulsoup4 # Parser de HTML
+rapidfuzz # Busca de proximidade de strings
+aiohttp # Requests
+selenium # Para páginas web com conteúdo dinâmico

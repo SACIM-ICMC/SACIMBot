@@ -1,6 +1,14 @@
 [
     {
-        "versao": "1.0",
+        "versao": "1.0.1",
+        "data": "24/11/2026",
+        "novidades": [
+            "Upload do repositório do Bot no GitHub."
+        ],
+        "correcoes": []
+    },
+    {
+        "versao": "1.0.0",
         "data": "21/11/2026",
         "novidades": [
             "Versão inicial do Bot e lançamento."

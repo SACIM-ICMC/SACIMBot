@@ -47,7 +47,7 @@ p_req:
 	@$(PYTHON) -m scraper.parsers requisito
 p_oferecs:
 	@echo "Realizando TRATAMENTO de oferecs/.json para dados.db"
-	@pyt$(PYTHON)hon3 -m scraper.parsers oferecimento
+	@$(PYTHON) -m scraper.parsers oferecimento
 
 # PIPELINES DE COLETAS + TRATAMENTOS
 pess: c_listpess c_pess p_pess

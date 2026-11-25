@@ -54,6 +54,7 @@ class RedesSACIM(StrEnum):
     URL_LINKTREE = "https://linktr.ee/sacim"
     SITE = "sacim.icmc.usp.br"
     URL_SITE = "http://sacim.icmc.usp.br"
+    REPO = "https://github.com/SACIM-ICMC/SACIMBot"
 
 
 class LinksInvite(StrEnum):

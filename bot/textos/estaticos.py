@@ -226,7 +226,8 @@ Vai pra puta que pariu,
     REPO = (
         f"💛🤖 Repositório Github do {hbold('SACIMBot')}\n"
         "\n"
-        f"Infelizmente o estagiário subiu o {hcode('.env')} no repositório. Em breve divulgaremos o repositório definitivo para você poder contribuir! Fique ligado.\n"
+        f"Sinta-se livre para explorar o código e nos ajudar a construir o Bot!\n"
+        f"Repositório: {hlink(RedesSACIM.REPO)}\n"
     )
 
     def VERSOES(versoes: list[Versao]) -> str:

@@ -176,6 +176,7 @@ class URLICMC(StrEnum):
     PESSOAS = "https://icmc.usp.br/pessoas"
     GRUPOS_PESQUISA = "https://www.icmc.usp.br/pesquisa/grupos"
     COMISSOES = "https://icmc.usp.br/institucional/estrutura-administrativa"
+    OFERECIMENTOS_ICMC = "https://icmc.usp.br/graduacao/informacoes-gerais-e-servicos/horarios-de-aulas"
 
     @staticmethod
     def PESSOA(p_id: str) -> str:

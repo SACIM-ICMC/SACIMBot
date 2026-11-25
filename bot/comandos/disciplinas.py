@@ -1,6 +1,7 @@
 from telebot.async_telebot import AsyncTeleBot
 from telebot.types import LinkPreviewOptions as LinkPrev
 from telebot.types import Message
+from telebot.formatting import hbold 
 
 from bot.entidades.callback import CallbackData as CD
 from bot.entidades.comando import criar_comando
@@ -14,6 +15,10 @@ from db.read.disciplina import (
     buscar_oferecimentos_por_codigo_disc,
     buscar_requisitos_por_codigo_disc,
 )
+
+from constantes import URLICMC
+from scraper.utils import extrair_pagina
+
 
 
 @criar_comando(
@@ -72,3 +77,45 @@ async def discnome(msg: Message, bot: AsyncTeleBot, args: list[str]) -> None:
         msg_botoes = MsgListaDeResultados(bot, msg.from_user.id, lista, nome, CD.ItemPg.DISCIPLINA)
 
     await msg_botoes.enviar_primeira_mensagem(msg)  # Manda a mensagem
+
+
+@criar_comando(
+    nome="oferecimento",
+    descricao="Retorna o arquivo com o oferecimento de cada matéria de um departamento do ICMC",
+    validador=check_args,
+    msg_erro="Uso correto do comando: oferecimento [departamento]",
+)
+async def oferecimento(msg: Message, bot: AsyncTeleBot, args: list[str]) -> None:
+    departamento = " ".join(args).upper()
+
+    if departamento not in ['SMA', 'SSC', 'SCC', 'SME']:
+        await bot.reply_to (
+            msg,
+            f"❌ Verifique a sigla do departamento e tente novamente."
+        )
+        return
+    
+    soup = extrair_pagina(URLICMC.OFERECIMENTOS_ICMC)
+
+    oferecimento_dpto = []
+
+    for a in soup.select("a"):
+        if "Disciplinas de código" in a.text:
+            if (link_dpto := a.get("href")) and departamento in a.text.upper():
+                oferecimento_dpto.append(link_dpto)
+    
+    if len(oferecimento_dpto) == 1:
+        await bot.reply_to (
+            msg,
+            f"Disciplinas do departamento {hbold(departamento)} no {hbold('primeiro semestre')}: {oferecimento_dpto[0]}\n\n"
+            f"❌ Ainda não foram encontradas disciplinas do segundo semestre.",
+            parse_mode = "HTML"
+        )
+    else:
+        await bot.reply_to (
+        msg,
+        f"Disciplinas do departamento {hbold(departamento)} no {hbold('primeiro semestre')}: {oferecimento_dpto[0]}\n\n"
+        f"Disciplinas do departamento {hbold(departamento)} no {hbold('segundo semestre')}: {oferecimento_dpto[1]}",
+        parse_mode = "HTML"
+    )
+

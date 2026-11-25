@@ -6,14 +6,16 @@ from bot.entidades.callback import CallbackData as CD
 from bot.entidades.comando import criar_comando
 from bot.entidades.mensagem import MsgDisciplina, MsgListaDeResultados
 from bot.entidades.resultados import Resultado
-from bot.textos.disciplinas import TxtDisc
+from bot.textos.disciplinas import TxtDisc, TxtOfc
 from bot.utils import check_args
+from constantes import SIGLAS_DEPTOS, URLICMC
 from db.read.disciplina import (
     buscar_disc_por_codigo,
     buscar_discs_por_nome,
     buscar_oferecimentos_por_codigo_disc,
     buscar_requisitos_por_codigo_disc,
 )
+from scraper.utils import extrair_pagina
 
 
 @criar_comando(
@@ -72,3 +74,35 @@ async def discnome(msg: Message, bot: AsyncTeleBot, args: list[str]) -> None:
         msg_botoes = MsgListaDeResultados(bot, msg.from_user.id, lista, nome, CD.ItemPg.DISCIPLINA)
 
     await msg_botoes.enviar_primeira_mensagem(msg)  # Manda a mensagem
+
+
+@criar_comando(
+    nome="oferecimento",
+    descricao="Oferecimento das matérias de um departamento",
+    validador=check_args,
+    msg_erro="❌ Uso correto do comando: oferecimento [departamento]",
+)
+async def oferecimento(msg: Message, bot: AsyncTeleBot, args: list[str]) -> None:
+    departamento = " ".join(args).upper()
+
+    if departamento not in SIGLAS_DEPTOS:
+        await bot.reply_to(msg, TxtOfc.SIGLA_INVALIDA, parse_mode="HTML")
+        return
+
+    soup = extrair_pagina(URLICMC.OFERECIMENTOS_ICMC)
+
+    oferecimento_dpto = []
+
+    for a in soup.select("a"):
+        if (
+            "Disciplinas de código" in a.text
+            and (link_dpto := a.get("href"))
+            and departamento in a.text.upper()
+        ):
+            oferecimento_dpto.append(link_dpto)
+
+    await bot.reply_to(
+        msg,
+        TxtOfc.OFERECIMENTO(departamento, oferecimento_dpto),
+        parse_mode="HTML",
+    )

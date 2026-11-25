@@ -1,3 +1,5 @@
+from enum import StrEnum
+
 from telebot.formatting import escape_html as scp
 from telebot.formatting import hbold, hcode, hitalic
 
@@ -151,3 +153,20 @@ class TxtDisc:
             lista_ofcs.append(txt)
 
         return txt_ofcs + "\n".join(lista_ofcs)
+
+
+class TxtOfc(StrEnum):
+    SIGLA_INVALIDA = "❌ Verifique a sigla do departamento e tente novamente."
+
+    @staticmethod
+    def OFERECIMENTO(depto: str, links: list[str]) -> str:
+        txt = (
+            f"Disciplinas do departamento {hbold(depto)} "
+            f"no {hbold('primeiro semestre')}: {links[0]}\n\n"
+        )
+        if len(links) == 1:
+            return txt + "❌ Ainda não foram encontradas disciplinas do segundo semestre."
+
+        return txt + (
+            f"Disciplinas do departamento {hbold(depto)} no {hbold('segundo semestre')}: {links[1]}"
+        )

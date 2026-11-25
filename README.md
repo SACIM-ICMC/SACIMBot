@@ -10,11 +10,11 @@ Bot criado pela SACIM para facilitar o acesso a informações do JupiterWeb e do
 5. [Considerações Finais e Futuro](#considerações-finais-e-futuro)
 
 ## 1. Informações Gerais
-O Bot é feito em Python 3.12.3 e utiliza a biblioteca `pyTelegramBotAPI` para integrar com a API oficial do Telegram. Ele também utiliza algumas outras bibliotecas, que podem ser consultadas em [requirements.txt](requirements.txt).
+O Bot é feito em `Python 3.12.3` e utiliza a biblioteca `pyTelegramBotAPI` para integrar com a API oficial do Telegram. Ele também utiliza algumas outras bibliotecas, que podem ser consultadas em [requirements.txt](requirements.txt).
 
 Adicionalmente, utilizamos o `ruff 0.16.8` como linter (cujas regras estão em [.ruff.toml](.ruff.toml)) e o `pre-commit 4.6.2` para executá-lo antes de cada commit (ver [.pre-commit-config.yaml](.pre-commit-config.yaml)).
 
-Atualmente, o Bot roda em um container Docker instalado em um dos PCs da Salinha da SACIM (*Ubuntu 24.04.5 LTS*). Um objetivo futuro é conseguirmos uma VM própria para ele!
+Atualmente, o Bot roda em um container Docker instalado em um dos PCs da Salinha da SACIM (`Ubuntu 24.04.5 LTS`). Um objetivo futuro é conseguirmos uma VM própria para ele!
 
 Caso queira nos contactar, ficaremos felizes em interagir por e-mail: `sacim (dot) caaso (at) gmail (dot) com`.
 
@@ -37,10 +37,10 @@ Ela é dividida nas etapas de **scraping** e **parsing**, cujos programas estão
 Essa conversão (HTML para `.json` e `.json` para BD) é feita por meio das entidades (classes) dispostas em [/entidades](/entidades). Essas estruturas permitem organizar semanticamente os dados coletados e facilitar sua compreensão.
 
 ### Banco de dados
-Todos os programas referentes à manipulação do arquivo de Banco de Dados `sqlite` (leitura e escrita) estão na pasta [/db](/db). Apesar do próprio arquivo do BD (`dados/dados.db`) não está no repositório, é possível reconstrui-lo quase totalmente com base nos comandos dispostos no [Makefile](Makefile) e nos esquemas das tabelas em [db/esquemas.txt](db/esquemas.txt).
+Todos os programas referentes à manipulação do arquivo de Banco de Dados `sqlite` (leitura e escrita) estão na pasta [/db](/db). Apesar do próprio arquivo do BD (`dados/dados.db`) não estar no repositório, é possível reconstrui-lo quase totalmente com base nos comandos dispostos no [Makefile](Makefile) e nos esquemas das tabelas em [db/esquemas.txt](db/esquemas.txt).
 
 ### Bot
-O Bot em questão roda a partir do programa principal [SacimBot.py](SacimBot.py) com o `TOKEN` salvo em um arquivo `.env` privado. Caso queira testar o Bot, recomendo criar um Bot próprio no Telegram - basta interagir com o Bot `@BotFather` que o Telegram mantém.
+O Bot em questão roda a partir do programa principal [SacimBot.py](SacimBot.py) com o `TOKEN` salvo em um arquivo `.env` privado, na variável `TELEGRAM_TOKEN`. Caso queira testar o Bot, recomendo criar um Bot próprio no Telegram - basta interagir com o Bot `@BotFather` que o Telegram mantém.
 
 Para o Bot funcionar, ele precisa realizar duas funções:
 
@@ -78,7 +78,7 @@ Os documentos enviados por alguns comandos do Bot (como o `/cal2026` e o `/matri
 - **`/dados`**:
     - `json/`
         - `discs/`, `ofcs/` e `reqs/`
-            - Arquivos `n.json` em que n corresponde ao código de uma unidade do Júpiter.
+            - Arquivos `n.json` em que n corresponde ao código de uma unidade do Júpiter. Por exemplo, `55.json` contém os dados relativos ao ICMC. É possível conferir os códigos de todas as unidades [aqui](https://uspdigital.usp.br/jupiterweb/jupColegiadoLista?tipo=D).
         - `comissoes.json`
         - `cursos.json`
         - `lista_pessoas.json`
@@ -97,10 +97,10 @@ Os documentos enviados por alguns comandos do Bot (como o `/cal2026` e o `/matri
 ## 4. Makefile
 O arquivo [Makefile](/Makefile) dispõe de um comando para rodar o Bot (`make run`) e uma série de comandos para realizar o scraping dos dados:
 
-- Os comandos da forma `c_xx` realizam a coleta dos dados (etapa do *scraping*) e escrevem nos JSON.
-- Os comandos da forma `p_xx` realizam o tratamento dos dados (etapa do *parsing*): leem do JSON e escrevem no BD.
+- Os comandos da forma `c_xx` (como `c_oferecs`) realizam a coleta dos dados (etapa do *scraping*) e escrevem nos JSON.
+- Os comandos da forma `p_xx` (como `p_oferecs`) realizam o tratamento dos dados (etapa do *parsing*): leem do JSON e escrevem no BD.
 - O comando `db` executa todos os comandos da forma `p_xx`.
-- Os comandos da forma `xx` executam as operações `c_xx` e `p_xx` diretamente.
+- Os comandos da forma `xx` executam as operações `c_xx` e `p_xx` diretamente (como `oferecs` executa o `c_oferecs` e `p_oferecs`).
 
 ## Considerações Finais e Futuro
 Caso você tenha quaisquer dúvidas a respeito do funcionamento do Bot, pode entrar em contato conosco via e-mail (`sacim (dot) caaso (at) gmail (dot) com`) ou pelos contatos dos Desenvolvedores listados no comando `/start`.

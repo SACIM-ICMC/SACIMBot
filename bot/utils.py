@@ -2,17 +2,10 @@ import re
 
 from telebot.formatting import hlink
 
+
 # Checagem de argumentos
-
-
 def check_args(args: list[str]) -> bool:
     return args
-
-
-def check_id(args: list[str]) -> bool:
-    if not args:
-        return False
-    return args[0].isdigit()
 
 
 # Formatações

@@ -225,7 +225,7 @@ Vai pra puta que pariu,
     )
 
     REPO = (
-        f"💛🤖 Repositório Github do {hbold('SACIMBot')}\n"
+        f"💛🤖 Repositório GitHub do {hbold('SACIMBot')}\n"
         "\n"
         f"Sinta-se livre para explorar o código e nos ajudar a construir o Bot!\n"
         "\n"

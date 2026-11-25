@@ -6,10 +6,9 @@ from bot.entidades.callback import CallbackData as CD
 from bot.entidades.comando import criar_comando
 from bot.entidades.mensagem import MsgDisciplina, MsgListaDeResultados
 from bot.entidades.resultados import Resultado
-from bot.textos.disciplinas import TxtDisc
-from bot.textos.oferecimento import TxtOfc
+from bot.textos.disciplinas import TxtDisc, TxtOfc
 from bot.utils import check_args
-from constantes import URLICMC, NomesDeptos
+from constantes import SIGLAS_DEPTOS, URLICMC
 from db.read.disciplina import (
     buscar_disc_por_codigo,
     buscar_discs_por_nome,
@@ -79,15 +78,15 @@ async def discnome(msg: Message, bot: AsyncTeleBot, args: list[str]) -> None:
 
 @criar_comando(
     nome="oferecimento",
-    descricao="Retorna o oferecimento das matérias de um departamento do ICMC",
+    descricao="Oferecimento das matérias de um departamento",
     validador=check_args,
     msg_erro="❌ Uso correto do comando: oferecimento [departamento]",
 )
 async def oferecimento(msg: Message, bot: AsyncTeleBot, args: list[str]) -> None:
     departamento = " ".join(args).upper()
 
-    if departamento not in NomesDeptos.__members__:
-        await bot.reply_to(msg, TxtOfc.SIGLA_INVALIDA(), parse_mode="HTML")
+    if departamento not in SIGLAS_DEPTOS:
+        await bot.reply_to(msg, TxtOfc.SIGLA_INVALIDA, parse_mode="HTML")
         return
 
     soup = extrair_pagina(URLICMC.OFERECIMENTOS_ICMC)

@@ -60,7 +60,6 @@ class RedesSACIM(StrEnum):
 class LinksInvite(StrEnum):
     SACIM_AVISOS = "https://t.me/SACIM"
     SUPERFAMILIA = "https://t.me/joinchat/bakayQMJ5rkwYTZh"
-    AVALIACOES = "https://t.me/+pXJDzgfnakQwNzNh"
     ASSALTOS = "https://t.me/joinchat/Ckw0K04Dn4qnqNabFFhSnQ"
     SUPERFEIRAO = "https://t.me/+9sNawgOy8NpjMjEx"
     PROMOCOES = "https://t.me/+HH8l_gHktcg0MWEx"

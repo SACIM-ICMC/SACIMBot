@@ -227,6 +227,7 @@ Vai pra puta que pariu,
         f"💛🤖 Repositório Github do {hbold('SACIMBot')}\n"
         "\n"
         f"Sinta-se livre para explorar o código e nos ajudar a construir o Bot!\n"
+        "\n"
         f"Repositório: {hlink("SACIM-ICMC/SACIMBot", RedesSACIM.REPO)}\n"
     )
 

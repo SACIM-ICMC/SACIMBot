@@ -120,4 +120,4 @@ A seguir, uma lista de melhorias e sugestões de novas funcionalidades que podem
 
 Bom código!
 
-**~ SACIM 2026**
+**SACIM 2026**

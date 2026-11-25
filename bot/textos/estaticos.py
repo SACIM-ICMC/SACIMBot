@@ -204,6 +204,7 @@ Vai pra puta que pariu,
         "/email [nome]: E-mail de uma pessoa (exceto alunos) do ICMC.\n"
         "/pesquisa [nome]: Informações de um grupo de pesquisa do ICMC.\n"
         "/sala [nome]: Sala de uma pessoa do ICMC.\n"
+        "/oferecimento [departamento]: Oferecimento de cada departamento do ICMC."
         "\n"
         f"ℹ️ {hbold('Informações')}\n"
         "⭐ /grad: Sobre o Serviço de Graduação.\n"

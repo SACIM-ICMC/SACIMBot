@@ -3,28 +3,28 @@ PYTHON = python3
 # COLETAS
 c_listpess:
 	@echo "Realizando COLETA de icmc/pessoas para lista_pessoas.json"
-	@$(PYTHON) -m scraper.collectors.lista_pessoa
+	@$(PYTHON) -m scraper.collectors.icmc.lista_pessoa
 c_pess:
 	@echo "Realizando COLETA de icmc/pessoas com lista_pessoas.json para pessoas.json"
-	@$(PYTHON) -m scraper.collectors.pessoa
+	@$(PYTHON) -m scraper.collectors.icmc.pessoa
 c_comiss:
 	@echo "Realizando COLETA de comissões para comissoes.json"
-	@$(PYTHON) -m scraper.collectors.comissao
+	@$(PYTHON) -m scraper.collectors.servicos.comissao
 c_curso:
 	@echo "Realizando COLETA de cursos para cursos.json"
-	@$(PYTHON) -m scraper.collectors.cursos
+	@$(PYTHON) -m scraper.collectors.jupiter.cursos
 c_pesq:
 	@echo "Realizando COLETA de icmc/pesquisa para pesquisas.json"
-	@$(PYTHON) -m scraper.collectors.pesquisa
+	@$(PYTHON) -m scraper.collectors.icmc.pesquisa
 c_disc: # ATENÇÃO: DEMORADO
 	@echo "Realizando COLETA de disciplinas para discs/.json"
-	@$(PYTHON) -m scraper.collectors.disciplina
+	@$(PYTHON) -m scraper.collectors.jupiter.disciplina
 c_req:  # ATENÇÃO: DEMORADO
 	@echo "Realizando COLETA de requisitos para reqs/.json"
-	@$(PYTHON) -m scraper.collectors.requisito
+	@$(PYTHON) -m scraper.collectors.jupiter.requisito
 c_oferecs:  # ATENÇÃO: DEMORADO
 	@echo "Realizando COLETA de oferecimentos para oferecs/.json"
-	@$(PYTHON) -m scraper.collectors.oferecimento
+	@$(PYTHON) -m scraper.collectors.jupiter.oferecimento
 
 # TRATAMENTOS
 p_pess:

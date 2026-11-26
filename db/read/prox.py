@@ -7,7 +7,7 @@ import re
 
 from db.conexao import conectar
 
-CONECTIVOS = {
+CONECTIVOS = [
     "a",
     "o",
     "as",
@@ -28,7 +28,7 @@ CONECTIVOS = {
     "com",
     "um",
     "uma",
-}
+]
 NOTA_MINIMA = 0.45
 
 
